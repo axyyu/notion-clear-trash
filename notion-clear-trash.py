@@ -7,7 +7,7 @@ def get_trash(client):
         'limit': 1000,
         'spaceId': client.current_space.id
     }
-    results = client.post('searchTrashPages', query)
+    results = client.post('/api/v3/searchTrashPages', query)
     block_ids = results.json()['results']
 
     return block_ids
