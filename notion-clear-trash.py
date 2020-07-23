@@ -14,8 +14,13 @@ def get_trash(client):
 
 
 def delete_permanently(client, block_ids):
-    for block_id in block_ids:
-        client.post("deleteBlocks", {"blockIds": [block_id], "permanentlyDelete": True})
+    total = len(block_ids)
+    for i in range(total):
+        try:
+            client.post("deleteBlocks", {"blockIds": [block_ids[i]], "permanentlyDelete": True})
+            print(f"Deleted {str(i+1)} / {str(total)}")
+        except:
+            print("Failed to delete BLOCK_ID:", block_ids[i])
 
 
 if __name__== "__main__":
