@@ -8,6 +8,7 @@ dictdiffer>=0.8.0
 future>=0.17.1
 idna>=2.8
 notion>=0.0.23
+notion-py>=0.0.7
 python-slugify>=3.0.2
 pytz>=2019.1
 requests>=2.22.0
