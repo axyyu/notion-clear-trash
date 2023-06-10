@@ -1,26 +1,36 @@
+#!python3.10
+# coding=utf-8
+'''
+ Author: Sanfor Chow
+ Date: 2023-06-10 13:10:35
+ LastEditors: Sanfor Chow
+ LastEditTime: 2023-06-10 13:10:56
+ FilePath: /notion-clear-trash/notion-clear-trash.py
+'''
 from notion.client import NotionClient
 
 
 def get_trash(client):
     query = {
-              "type": "BlocksInSpace",
-              "query": "",
-              "filters": {
+            "type": "BlocksInSpace",
+            "query": "",
+            "filters": {
                 "isDeletedOnly": True,
                 "excludeTemplates": False,
-                "isNavigableOnly": True,
+                "navigableBlockContentOnly": True,
                 "requireEditPermissions": False,
+                "includePublicPagesWithoutExplicitAccess": False,
                 "ancestors": [],
                 "createdBy": [],
                 "editedBy": [],
                 "lastEditedTime": {},
-                "createdTime": {}
-              },
-              "sort": "Relevance",
-              "limit": 1000,
-              "spaceId": client.current_space.id,
-              "source": "trash"
-            }
+                "createdTime": {},
+                "inTeams": []},
+            "sort": {"field": "lastEdited", "direction": "desc"},
+            "limit": 1000,
+            "spaceId": client.current_space.id,
+            "source": "trash"
+        }
     results = client.post('/api/v3/search', query)
     block_ids = results.json()['results']
 
