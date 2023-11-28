@@ -3,24 +3,25 @@ from notion.client import NotionClient
 
 def get_trash(client):
     query = {
-              "type": "BlocksInSpace",
-              "query": "",
-              "filters": {
+            "type": "BlocksInSpace",
+            "query": "",
+            "filters": {
                 "isDeletedOnly": True,
                 "excludeTemplates": False,
-                "isNavigableOnly": True,
+                "navigableBlockContentOnly": True,
                 "requireEditPermissions": False,
+                "includePublicPagesWithoutExplicitAccess": False,
                 "ancestors": [],
                 "createdBy": [],
                 "editedBy": [],
                 "lastEditedTime": {},
-                "createdTime": {}
-              },
-              "sort": "Relevance",
-              "limit": 1000,
-              "spaceId": client.current_space.id,
-              "source": "trash"
-            }
+                "createdTime": {},
+                "inTeams": []},
+            "sort": {"field": "lastEdited", "direction": "desc"},
+            "limit": 1000,
+            "spaceId": client.current_space.id,
+            "source": "trash"
+        }
     results = client.post('/api/v3/search', query)
     block_ids = results.json()['results']
 
